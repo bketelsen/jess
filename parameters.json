@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageaccountname": {
+      "value": "mystorageaccount30640"
+    },
+   "storageaccountkey": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/312e6121-2704-43bc-b3c4-801104bbd39d/resourceGroups/homeStoreRG/providers/Microsoft.KeyVault/vaults/home-keyvault"
+        },
+        "secretName": "azurefilestoragekey"
+      }
+    }
+  }
+}
