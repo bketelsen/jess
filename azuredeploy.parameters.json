@@ -3,9 +3,9 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "storageaccountname": {
-      "value": "mystorageaccount"
+      "value": "homestorebketelsen"
     },
-   "storageaccountkey": {
+    "storageaccountkey": {
       "reference": {
         "keyVault": {
           "id": "/subscriptions/xxx/resourceGroups/homeStoreRG/providers/Microsoft.KeyVault/vaults/home-keyvault"
@@ -15,3 +15,4 @@
     }
   }
 }
+

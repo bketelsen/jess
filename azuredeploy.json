@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageaccountname": {
+        "type": "string"
+    },
+    "storageaccountkey": {
+        "type": "securestring"
+    }
+  },
+  "variables": {
+      "name": "bketelsen-aci-cloud9",
+      "image": "z3cka/c9",
+      "mountPath": "/workspace"
+  },
+  "resources":[
+        {
+            "name": "[variables('name')]",
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2017-08-01-preview",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "containers": [
+                    {
+                        "name": "[variables('name')]",
+                        "properties": {
+                            "image": "[variables('image')]",
+                            "ports": [
+                                {
+                                    "port": 80
+                                }
+                            ],
+                            "volumeMounts": [
+                                {
+                                    "name": "myvolume",
+                                    "mountPath": "[variables('mountPath')]"
+                                }
+                            ],
+                            "resources": {
+                              "requests": {
+                                "cpu": 1,
+                                "memoryInGb": 1.5
+                              }
+                            }
+                        }
+                    }
+                ],
+                "osType": "Linux",
+                "ipAddress": {
+                    "type": "Public",
+                    "ports": [
+                        {
+                            "protocol": "tcp",
+                            "port": 80
+                        }
+                    ]
+                 },
+                "volumes": [
+                    {
+                        "name": "myvolume",
+                        "azureFile": {
+                            "shareName": "acishare",
+                            "storageAccountName": "[parameters('storageaccountname')]",
+                            "storageAccountKey": "[parameters('storageaccountkey')]"
+                        }
+                    }
+                ]
+            }
+        }
+  ]
+}

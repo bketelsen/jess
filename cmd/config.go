@@ -53,11 +53,12 @@ func createTheConfig(cmd *cobra.Command) error {
 		}
 	}
 	conf := Conf{
-		Author:    viper.GetString("author"),
-		Twitter:   viper.GetString("twitter"),
-		Email:     viper.GetString("email"),
-		ModuleDir: "/Users/me/github.com/me/modules",
-		CourseDir: "/Users/me/courses",
+		StorageName:   viper.GetString("storagename"),
+		ResourceGroup: viper.GetString("resourcegroup"),
+		Location:      viper.GetString("location"),
+		ShareName:     viper.GetString("sharename"),
+		StorageKey:    viper.GetString("storagekey"),
+		VaultName:     viper.GetString("vaultname"),
 	}
 	return writeTemplateToFile(path, name, Config, conf)
 }

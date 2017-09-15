@@ -1,16 +1,8 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": {
-      "storageaccountname": {
-            "type": "string"
-          },
-      "storageaccountkey": {
-            "type": "securestring"
-          }
-    },
   "resources":[{
-      "name": "hellofiles3",
+      "name": "hellofiles6",
       "type": "Microsoft.ContainerInstance/containerGroups",
       "apiVersion": "2017-08-01-preview",
       "location": "[resourceGroup().location]",
@@ -36,8 +28,8 @@
                       "name": "myvolume",
                       "azureFile": {
                                     "shareName": "homeshare",
-                                    "storageAccountName": "[parameters('storageaccountname')]",
-                                    "storageAccountKey": "[parameters('storageaccountkey')]"
+                                    "storageAccountName": "mystorageaccount",
+                                    "storageAccountKey": ""
                                 }
                     }
                   ]

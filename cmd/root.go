@@ -25,6 +25,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/Azure/azure-sdk-for-go/arm/resources/resources"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -34,7 +35,7 @@ var cfgFile string
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-	Use:   "cloud {container} up|down",
+	Use:   "jess {container} up|down",
 	Short: "Run an ACI container and start a web browser.",
 	Long: `A longer description that spans multiple lines and likely contains
 examples and usage of using your application. For example:
@@ -58,21 +59,28 @@ func RootCommand(cmd *cobra.Command, args []string) {
 		fmt.Println("Invalid operation, please specify UP or DOWN")
 		os.Exit(1)
 	}
-	if action == "UP" {
-		err := startContainer(container)
+	fmt.Println(container, action)
+	cl := resources.NewGroupsClient("xxx")
+	fmt.Println(cl)
+	resp, err := cl.CheckExistence("xxx")
+	fmt.Println(resp, err)
+	/*
+		if action == "UP" {
+			err := startContainer(container)
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			startBrowser()
+			return
+		}
+
+		err := stopContainer(container)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		startBrowser()
-		return
-	}
-
-	err := stopContainer(container)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	*/
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -90,7 +98,7 @@ func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cloud.yaml)")
+	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.jess.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -112,7 +120,7 @@ func initConfig() {
 
 		// Search config in home directory with name ".cloud" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigName(".cloud")
+		viper.SetConfigName(".jess")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
